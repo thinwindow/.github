@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Less in the window. Less on the bill.</strong><br>
-  Most of your agent's tokens are re-reads: 87–96% is context re-sent every turn. ThinWindow is both a Claude Code plugin and an Agent Skill, and it shrinks that context: 12–23% fewer tokens, measured in Claude Code on three models.
+  Most of your agent's tokens are re-reads: 87–96% is context re-sent every turn. ThinWindow is both a Claude Code plugin and an Agent Skill, and it shrinks that context: 13–23% fewer tokens, measured in Claude Code on three models.
 </p>
 
 <p align="center">
@@ -17,12 +17,14 @@
 | Model | Tokens | Cost | Success baseline → ThinWindow | Runs |
 | --- | ---: | ---: | :---: | ---: |
 | Opus 5.5 | **−15.8%** | **−19.4%** | **16/16** → **16/16** | 32 |
-| Sonnet 5 | **−11.6%** | **−7.4%** | **24/24** → **24/24** | 48 |
+| Sonnet 5 | **−13.2%** | **−7.9%** | **24/24** → **24/24** | 48 |
 | Haiku 4.5 | **−23.0%** | **−20.2%** | **14/16** → **13/16** | 32 |
 
 Same 8 tasks, 112 runs, one agent per run, no cherry-picking:
-every run recorded is in the table. Per-task figures, the spread and the raw
-data are in [Benchmark](#benchmark) below.
+every run recorded is in the table, except runs superseded by a later version
+of the code on the same task, which are kept in
+[`bench/results/archive/`](https://github.com/thinwindow/thinwindow/tree/main/bench/results/archive). Per-task figures, the
+spread and the raw data are in [Benchmark](#benchmark) below.
 <!-- RESULTS:END -->
 
 ## Why context is the bill
@@ -36,15 +38,17 @@ every subsequent turn. The cost of a session is therefore closer to
 tokens ≈ context size × turns
 ```
 
-than to the length of the answer. In the runs measured here, **87% to 96% of all
-tokens billed were cache reads** — context being re-sent, turn after turn —
+than to the length of the answer. In the baseline runs measured here, **87% to 96%
+of all tokens billed were cache reads** — context being re-sent, turn after turn —
 against 0.6% to 1.9% for the agent's own output:
 
+<!-- CACHE:START -->
 | Model | Cache reads | Cache writes | Output |
 | --- | ---: | ---: | ---: |
 | Opus 5.5 | 92.0% | 6.6% | 1.3% |
 | Sonnet 5 | 87.1% | 11.0% | 1.9% |
 | Haiku 4.5 | 96.4% | 2.9% | 0.6% |
+<!-- CACHE:END -->
 
 That is the whole thesis. Telling an agent to be brief touches the ~1% column.
 Stopping it from pulling a 2,000-line file into context on turn 3 touches the
@@ -133,7 +137,7 @@ Raw runs: [`bench/results/opus-528598a.jsonl`](https://github.com/thinwindow/thi
 
 ### Sonnet 5
 
-`claude-sonnet-5` (requested as `sonnet`) · Claude Code 2.1.282 · ThinWindow 0.1.0 (528598a) · 48 runs, up to 3 per task and condition · 2026-09-25
+`claude-sonnet-5` (requested as `sonnet`) · Claude Code 2.1.282 · ThinWindow 0.2.0 (30e9c6b), 0.1.0 (528598a) · 48 runs, up to 3 per task and condition · 2026-09-25 to 2026-09-26
 
 ![Change in total tokens per task, Sonnet 5: bars left of zero are tokens saved with ThinWindow](https://raw.githubusercontent.com/thinwindow/thinwindow/main/bench/results/chart-claude-sonnet-5.svg)
 
@@ -144,16 +148,16 @@ Raw runs: [`bench/results/opus-528598a.jsonl`](https://github.com/thinwindow/thi
 | click-choice-brackets | 203k (149k–265k) | 194k (142k–233k) | −4.7% | $0.15 | $0.13 | −13.0% | 10 | 12 | 3/3 | 3/3 |
 | click-footer-year | 73k (72k–73k) | 73k (72k–74k) | +0.4% | $0.06 | $0.06 | −1.6% | 4 | 4 | 3/3 | 3/3 |
 | click-help-spec | 186k (163k–232k) | 83k (80k–107k) | −55.3% | $0.14 | $0.09 | −35.5% | 8 | 5 | 3/3 | 3/3 |
-| commander-ci-config | 75k (75k–75k) | 97k (77k–97k) | +29.3% | $0.06 | $0.07 | +12.2% | 4 | 5 | 3/3 | 3/3 |
+| commander-ci-config | 75k (75k–75k) | 78k (77k–78k) | +3.9% | $0.06 | $0.07 | +4.5% | 4 | 4 | 3/3 | 3/3 |
 | commander-command-clash | 180k (159k–220k) | 137k (130k–204k) | −23.8% | $0.16 | $0.15 | −4.0% | 10 | 9 | 3/3 | 3/3 |
 | commander-extract-utils | 141k (80k–167k) | 189k (164k–266k) | +33.9% | $0.10 | $0.12 | +15.3% | 9 | 12 | 3/3 | 3/3 |
 | commander-negate-default-order | 258k (203k–327k) | 205k (151k–278k) | −20.3% | $0.17 | $0.15 | −8.5% | 13 | 12 | 3/3 | 3/3 |
 | commander-rename-display-width | 74k (55k–75k) | 74k (55k–76k) | −0.3% | $0.06 | $0.06 | −1.0% | 4 | 4 | 3/3 | 3/3 |
-| **Total** | **1.19M** | **1.05M** | **−11.6%** | **$0.91** | **$0.84** | **−7.4%** | 62 | 63 | **24/24** | **24/24** |
+| **Total** | **1.19M** | **1.03M** | **−13.2%** | **$0.91** | **$0.83** | **−7.9%** | 62 | 62 | **24/24** | **24/24** |
 
 </details>
 
-Raw runs: [`bench/results/sonnet-528598a.jsonl`](https://github.com/thinwindow/thinwindow/blob/main/bench/results/sonnet-528598a.jsonl)
+Raw runs: [`bench/results/sonnet-30e9c6b.jsonl`](https://github.com/thinwindow/thinwindow/blob/main/bench/results/sonnet-30e9c6b.jsonl), [`bench/results/sonnet-528598a.jsonl`](https://github.com/thinwindow/thinwindow/blob/main/bench/results/sonnet-528598a.jsonl)
 
 ### Haiku 4.5
 
@@ -217,12 +221,20 @@ usage limits instead, but the ratio is the same.
   counts and the tool-call trace. The tables above are generated from those
   files by [`bench/report.mjs`](https://github.com/thinwindow/thinwindow/blob/main/bench/report.mjs); no number in this README is
   typed by hand.
+- One task was re-measured after a fix. On Sonnet 5, every ThinWindow run of
+  commander-ci-config capped `cat .github/workflows/*.yml` at 60 lines and cut
+  the file the task asks about; the hook now keeps short concatenations whole
+  ([#7](https://github.com/thinwindow/thinwindow/issues/7)). That task's three
+  ThinWindow runs were re-run at 30e9c6b (+29.3% → +3.9%), and the three they
+  replace are in [`bench/results/archive/`](https://github.com/thinwindow/thinwindow/tree/main/bench/results/archive). No other
+  recorded run makes that call, so no other task was re-run.
 - The rules were tuned on these same 8 tasks, on two CLI-argument-parsing
   libraries, in JavaScript and Python. That is a narrow slice of software. Your
   savings on other work will differ.
-- Samples are small. Agents are noisy: the same task can take 4 turns once and
-  15 the next, which is why the tables report medians and per-task spread rather
-  than a single headline average.
+- Samples are small. Agents are noisy: the same task took 4 turns in one run and
+  9 in the next (commander-extract-utils on Sonnet 5, without ThinWindow), which
+  is why the tables report medians and per-task spread rather than a single
+  headline average.
 - Re-run it against your own account and your own limits:
 
   ```
@@ -241,18 +253,19 @@ improving them and to re-publish the raw files each time.
 
 Two things are visible in the data above:
 
-- **Not every task improves.** On Sonnet 5, three of the eight tasks cost more
-  with ThinWindow than without. Neutralising just those regressions — without
-  saving a single extra token anywhere else — would take Sonnet from −11.6% to
-  about −17.5%, and Opus from −15.8% to about −17.7%. Most of the near-term
-  headroom is in not making short tasks worse, not in squeezing the long ones
-  further.
+- **Not every task improves.** On Sonnet 5, three of the eight tasks still cost
+  more with ThinWindow than without. Neutralising just those regressions —
+  without saving a single extra token anywhere else — would take Sonnet from
+  −13.2% to about −17.5%, and Opus from −15.8% to about −17.7%. Most of the
+  near-term headroom is in not making short tasks worse, not in squeezing the
+  long ones further. What the traces show for each of them is in
+  [#7](https://github.com/thinwindow/thinwindow/issues/7).
 - **Turns are the untapped factor.** Since cost is roughly context × turns, a
   turn saved is worth as much as a large read avoided. Opus took 12.9% fewer
-  turns here and shows the largest cost cut; Sonnet took 1.6% more and shows
-  the smallest. An earlier attempt at explicit "use fewer turns" rules made
-  Sonnet measurably worse and was reverted rather than kept and quietly
-  excluded — that reverted experiment is still in the history.
+  turns here and cut cost by 19.4%; Sonnet took as many turns as without
+  ThinWindow and cut cost by 7.9%. An earlier attempt at explicit "use fewer
+  turns" rules made Sonnet measurably worse and was reverted rather than kept
+  and quietly excluded — that reverted experiment is still in the history.
 
 ## Contributing
 
@@ -310,8 +323,10 @@ Please read the numbers with that in mind:
 
 **Does it make my agent worse at the task?** That is what the success column in
 every table measures. A saving that fails the task is not a saving. Across the
-three models, success was identical to the baseline except for a single Haiku
-run, where both conditions were already hitting the 40-turn cap.
+three models, success was identical to the baseline except on one Haiku task,
+commander-rename-display-width: 1/2 without ThinWindow, 0/2 with it. Haiku
+struggles there either way: three of its four runs failed, and every run took 35
+turns or more.
 
 **Why not just tell the agent to be brief?** Because output is roughly 1% of the
 bill, as the table at the top of this README shows. A long answer is paid once;
