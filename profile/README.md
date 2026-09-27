@@ -12,6 +12,10 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/thinwindow/thinwindow/blob/main/docs/WHERE-THE-TOKENS-GO.md"><b>Where the tokens go</b></a> · <a href="#benchmark">Benchmark and raw data</a> · <a href="#install">Install</a>
+</p>
+
+<p align="center">
   <b>English</b> · <a href="https://github.com/thinwindow/thinwindow/blob/main/README.es.md">Español</a> · <a href="https://github.com/thinwindow/thinwindow/blob/main/README.pt-BR.md">Português</a>
 </p>
 
