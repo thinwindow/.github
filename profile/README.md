@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>Less in the window. Less on the bill.</strong><br>
-  ThinWindow makes Claude Code use less context — without changing the outcome. A Claude Code plugin and Agent Skill, benchmarked on Opus 5.5, Sonnet 5.5, and Haiku 4.5: 7–11% lower cost, 3–6% fewer tokens, with the same success rate.<br>
+  ThinWindow makes Claude use less context — without changing the outcome. A plugin and Agent Skill for Claude Code, Cowork, and the Claude apps, benchmarked in Claude Code on Opus 5.5, Sonnet 5.5, and Haiku 4.5: 7–11% lower cost, 3–6% fewer tokens.<br>
   Listed in the official Claude Code plugin directory.
 </p>
 
