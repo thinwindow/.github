@@ -20,6 +20,10 @@
   <b>English</b> · <a href="https://github.com/thinwindow/thinwindow/blob/main/README.es.md">Español</a> · <a href="https://github.com/thinwindow/thinwindow/blob/main/README.pt-BR.md">Português</a>
 </p>
 
+<p align="center">
+  <a href="https://thinwindow.github.io/thinwindow/"><img src="https://raw.githubusercontent.com/thinwindow/thinwindow/main/assets/cover.png" alt="The ThinWindow documentation site" width="720"></a>
+</p>
+
 ## Why context is the bill
 
 A coding agent pays for what it carries more than for what it writes.
